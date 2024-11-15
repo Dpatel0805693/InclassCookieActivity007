@@ -1,7 +1,12 @@
 <?php
-
-
-
+session_start();
+/* if (!isset($_SESSION['favorites'])) {
+  $_SESSION['favorites'] = [];
+} */
+//checks favorites array
+/* echo '<pre>';
+print_r($_SESSION['favorites']);
+echo '</pre>'; */
 
 ?>
 
@@ -38,7 +43,22 @@
               <th>Action</th>
           </tr></thead>
           <tbody>
+  
               <?php 
+              if (isset($_SESSION['favorites']) && is_array($_SESSION['favorites'])) {
+                  foreach ($_SESSION['favorites'] as $favorite) {
+                      echo "<tr>
+                              <td><img src='images/art/square-medium/{$favorite['ImageFileName']}.jpg'></td>
+                              <td><a href='single-painting.php?id={$favorite['PaintingID']}'>{$favorite['Title']}</a></td>
+                              <td><a class='ui small button' href='remove-favorites.php?id={$favorite['PaintingID']}'>Remove</a></td>
+                            </tr>";
+                  }
+              } else {
+                  echo "<tr><td colspan='3'>No favorites found.</td></tr>";
+              }
+              
+              
+                
                 /* // markup for sample favorite is as follows:
                      <tr>
                         <td><img src="images/art/square-medium/092040.jpg"></td>
