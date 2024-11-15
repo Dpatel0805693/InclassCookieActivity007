@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'includes/data.inc.php';
 include 'includes/art-functions.inc.php';
 
@@ -61,7 +62,9 @@ foreach($paintings as $p) {
                 <?php include 'includes/painting-small-tabs.inc.php'; ?>
                 
                 <!-- Cart and Price -->
-                <?php include 'includes/cart-box.inc.php'; ?>                        
+                <?php include 'includes/cart-box.inc.php'; ?>  
+                
+            
                           
             </div>
         </div>
