@@ -36,7 +36,7 @@
             <h2 class="header item">
               <img src="images/logo5.png" class="ui small image" >
             </h2>  
-            <a class="item" href="index.php">
+            <a class="item" href="browse-paintings.php">
               <i class="home icon"></i> Home
             </a>       
             <a class="item">
