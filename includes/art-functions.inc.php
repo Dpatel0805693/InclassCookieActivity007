@@ -38,7 +38,7 @@ function outputFilterOptions($data, $valueField, $dataField) {
 }
 
 function makeArtistName($first, $last) {
-    return utf8_encode($first . ' ' . $last);
+    return ($first . ' ' . $last);
 }
 
 ?>
