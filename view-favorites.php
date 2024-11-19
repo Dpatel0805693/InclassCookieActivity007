@@ -50,7 +50,7 @@ echo '</pre>'; */
                       echo "<tr>
                               <td><img src='images/art/square-medium/{$favorite['ImageFileName']}.jpg'></td>
                               <td><a href='single-painting.php?id={$favorite['PaintingID']}'>{$favorite['Title']}</a></td>
-                              <td><a class='ui small button' href='remove-favorites.php?id={$favorite['PaintingID']}'>Remove</a></td>
+                              <td><a class='ui small button' href='remove-favorites.php?PaintingID={$favorite['PaintingID']}'>Remove</a></td>
                             </tr>";
                   }
               } else {
