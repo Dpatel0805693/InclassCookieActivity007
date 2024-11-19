@@ -1,5 +1,5 @@
 # In-class Cookie activity 007
-
+## IMPORTANT - Go to `People` on Canvas and join a group (self-signup), if you are working in one.
 ## Forking this repo (BLAH BLAH BLAH ... the same verbiage as earlier)
 To work on this project, you will need to create a personal copy of the repository. This is done by forking it. Follow these steps:
 ### 1. Fork repository
