@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 ?>
 <div class="ui segment">
     <div class="ui form">
