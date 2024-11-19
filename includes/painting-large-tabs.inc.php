@@ -7,7 +7,7 @@
           <a class="item" data-tab="third">Reviews</a>
         </div>
         <div class="ui bottom attached active tab segment" data-tab="first">
-         <?php echo  utf8_encode($row['Description']); ?>
+         <?php echo  ($row['Description']); ?>
         </div>
         <div class="ui bottom attached tab segment" data-tab="second">
 
