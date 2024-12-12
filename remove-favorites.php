@@ -1,18 +1,33 @@
 <?php
-session_start(); #adds to session
-if(isset($_GET['PaintingID'])){ #if the query has a specific painting id
-    $paintingID = $_GET['PaintingID'];
-
-    foreach($_SESSION['favorites'] as $index =>$favorite){ #go through favories list and remove the painting that was specified
-        if ($favorite['PaintingID']==$paintingID){
-            unset($_SESSION['favorites'][$index]);
-        $_SESSION['favorites'] = array_values($_SESSION['favorites']); // Re-index the array
-        break;
-        }
+// Function to get the favorites from the cookie
+function getFavoritesFromCookie() {
+    if (isset($_COOKIE['favorites'])) {
+        return json_decode($_COOKIE['favorites'], true);
     }
+    return [];
 }
-else{ #if there was not a specific painting ID, then the remove all button was clicked so reset entire favorites list
-    $_SESSION['favorites'] = [];
+
+// Function to save the favorites to the cookie
+function saveFavoritesToCookie($favorites) {
+    $jsonFavorites = json_encode($favorites);
+    setcookie('favorites', $jsonFavorites, time() + (86400 * 30), "/"); // 86400 = 1 day
 }
-header('Location: view-favorites.php'); #go back to view favorites page
+
+// Retrieve the favorites from the cookie
+$favorites = getFavoritesFromCookie();
+
+// Check if we need to remove all favorites or a specific one
+if (isset($_GET['action']) && $_GET['action'] == 'removeAll') {
+    $favorites = []; // Clear all favorites
+} elseif (isset($_GET['PaintingID'])) {
+    $paintingID = $_GET['PaintingID'];
+    unset($favorites[$paintingID]); // Remove the specific favorite
+}
+
+// Save the updated favorites to the cookie
+saveFavoritesToCookie($favorites);
+
+// Redirect back to the favorites page
+header('Location: view-favorites.php');
 exit();
+?>

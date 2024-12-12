@@ -8,6 +8,18 @@ session_start();
 print_r($_SESSION['favorites']);
 echo '</pre>'; */
 
+function getFavoritesFromCookie() {
+  if (isset($_COOKIE['favorites'])) {
+      return json_decode($_COOKIE['favorites'], true);
+  }
+  return [];
+}
+
+function saveFavoritesToCookie($favorites) {
+  $jsonFavorites = json_encode($favorites);
+  setcookie('favorites', $jsonFavorites, time() + (86400 * 30), "/"); // 86400 = 1 day
+}
+$favorites = getFavoritesFromCookie();
 ?>
 
 <!DOCTYPE html>
@@ -45,8 +57,8 @@ echo '</pre>'; */
           <tbody>
   
               <?php 
-              if (isset($_SESSION['favorites']) && is_array($_SESSION['favorites'])) {
-                  foreach ($_SESSION['favorites'] as $favorite) {
+              if (!empty($favorites)) {
+                  foreach ($favorites as $favorite) {
                       echo "<tr>
                               <td><img src='images/art/square-medium/{$favorite['ImageFileName']}.jpg'></td>
                               <td><a href='single-painting.php?id={$favorite['PaintingID']}'>{$favorite['Title']}</a></td>
@@ -71,7 +83,7 @@ echo '</pre>'; */
           </tbody>
           <tfoot class="full-width">
               <th colspan="3">
-                <a class="ui left floated small primary labeled icon button" href="remove-favorites.php">
+                <a class="ui left floated small primary labeled icon button" href="remove-favorites.php?action=removeAll">
                   <i class="remove circle icon"></i> Remove All Favorites
                 </a>                  
               </th>

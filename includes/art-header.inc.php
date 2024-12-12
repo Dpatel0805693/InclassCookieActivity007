@@ -16,10 +16,13 @@
                 <a class=" item" href="view-favorites.php">
                   <i class="heartbeat icon"></i> Favorites
                   <?php
-                  if (isset($_SESSION['favorites'])) {
-                    echo '<div class="ui red mini label">';
-                    echo count($_SESSION['favorites']);
-                    echo '</div>';
+                  if (isset($_COOKIE['favorites'])) {
+                      $favorites = json_decode($_COOKIE['favorites'], true);
+                      if (!empty($favorites)) {
+                          echo '<div class="ui red mini label">';
+                          echo count($favorites);
+                          echo '</div>';
+                      }
                   }
                   ?>
                   

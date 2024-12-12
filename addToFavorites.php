@@ -1,31 +1,38 @@
 <?php
-session_start();
+// Function to get the favorites from the cookie
+function getFavoritesFromCookie() {
+    if (isset($_COOKIE['favorites'])) {
+        return json_decode($_COOKIE['favorites'], true);
+    }
+    return [];
+}
 
-//query info here - if it is in the url then it will create a painting array for it and add to favorites array
-if (isset($_GET['PaintingID']) && isset($_GET['ImageFileName']) && isset($_GET['Title'])) 
-{
+// Function to save the favorites to the cookie
+function saveFavoritesToCookie($favorites) {
+    $jsonFavorites = json_encode($favorites);
+    setcookie('favorites', $jsonFavorites, time() + (86400 * 30), "/"); // 86400 = 1 day
+}
+
+// Query info here - if it is in the URL then it will create a painting array for it and add to favorites array
+if (isset($_GET['PaintingID']) && isset($_GET['ImageFileName']) && isset($_GET['Title'])) {
     $paintingID = $_GET['PaintingID'];
     $imageFileName = $_GET['ImageFileName'];
     $title = $_GET['Title'];
 
-    $painting = [ //creates painting array that stores all the data from query
-        'PaintingID'=> $paintingID,
+    $painting = [ // Creates painting array that stores all the data from query
+        'PaintingID' => $paintingID,
         'ImageFileName' => $imageFileName,
         'Title' => $title
     ];
 
-    if(!isset($_SESSION['favorites'])) { // if there is not a favorites array in the current session
-        $_SESSION['favorites'] = [];
-    }
-    
-    $_SESSION['favorites'][$paintingID] = $painting; // sets the painting id as its key value
+    $favorites = getFavoritesFromCookie(); // Retrieve the current favorites from the cookie
 
-    //checks if favorites list is correct
-    /* echo '<pre>';
-    print_r($_SESSION['favorites']);
-    echo '</pre>'; */
-};
+    $favorites[$paintingID] = $painting; // Add or update the painting in the favorites array
 
-// Redirect the user to view favorites php
+    saveFavoritesToCookie($favorites); // Save the updated favorites array back to the cookie
+}
+
+// Redirect the user to view favorites PHP
 header('Location: view-favorites.php');
 exit();
+?>
